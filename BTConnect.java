@@ -3,6 +3,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import lejos.robotics.*;
 import lejos.remote.ev3.RMIRegulatedMotor;
@@ -29,14 +30,24 @@ public class BTConnect {
       System.exit(1);
     }
 
+    Scanner in = new Scanner(System.in);
+
     Sound.beep();
     RMIRegulatedMotor wheels = battleBot.createRegulatedMotor("B", 'L');
+    try {
+      wheels.setSpeed((int)wheels.getMaxSpeed());
+      wheels.forward();
+    } catch (Exception e) {
+      System.err.println("Error: " + e);
+    }
 
     // Infinite loop for running bot
     while(true) {
+      System.out.println(in.nextInt());
       if (Button.ESCAPE.isDown()) {
         try {
           wheels.stop(true);
+          wheels.close();
         } catch (Exception e) {
           System.err.println("Error: " + e);
         }
