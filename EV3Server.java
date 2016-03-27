@@ -9,7 +9,9 @@ public class EV3Server {
   public static EV3LargeRegulatedMotor rightWheel = new EV3LargeRegulatedMotor(MotorPort.A);
   public static EV3LargeRegulatedMotor leftWheel = new EV3LargeRegulatedMotor(MotorPort.D);
 
+
   public static void main (String[] args) throws Exception {
+    leftWheel.synchronizeWith(new EV3LargeRegulatedMotor[] {rightWheel});
     System.out.println("Server ready for connection.");
     ServerSocket serv = new ServerSocket(1111);
     // Waits for client connection
@@ -45,34 +47,44 @@ public class EV3Server {
   }
 
   public static void driveForward() {
+    leftWheel.startSynchronization();
     leftWheel.setSpeed(leftWheel.getMaxSpeed());
     rightWheel.setSpeed(rightWheel.getMaxSpeed());
     leftWheel.backward();
     rightWheel.backward();
+    leftWheel.endSynchronization();
   }
 
   public static void stopDriving() {
+    leftWheel.startSynchronization();
     leftWheel.stop();
     rightWheel.stop();
+    leftWheel.endSynchronization();
   }
 
   public static void driveBackward() {
+    leftWheel.startSynchronization();
     leftWheel.forward();
     rightWheel.forward();
+    leftWheel.endSynchronization();
   }
 
   public static void driveLeft() {
+    leftWheel.startSynchronization();
     leftWheel.setSpeed((float)(leftWheel.getMaxSpeed() / 5.0 ));
     leftWheel.backward();
     rightWheel.setSpeed(rightWheel.getMaxSpeed());
     rightWheel.backward();
+    leftWheel.endSynchronization();
   }
 
   public static void driveRight() {
+    leftWheel.startSynchronization();
     rightWheel.setSpeed((float)(rightWheel.getMaxSpeed() / 5.0));
     rightWheel.backward();
     leftWheel.setSpeed(leftWheel.getMaxSpeed());
     leftWheel.backward();
+    leftWheel.endSynchronization();
   }
 
 }
