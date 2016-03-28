@@ -64,6 +64,8 @@ public class EV3Server {
 
   public static void driveBackward() {
     leftWheel.startSynchronization();
+    leftWheel.setSpeed(rightWheel.getMaxSpeed());
+    rightWheel.setSpeed(rightWheel.getMaxSpeed());
     leftWheel.forward();
     rightWheel.forward();
     leftWheel.endSynchronization();
@@ -71,7 +73,7 @@ public class EV3Server {
 
   public static void driveLeft() {
     leftWheel.startSynchronization();
-    leftWheel.setSpeed((float)(leftWheel.getMaxSpeed() / 5.0 ));
+    leftWheel.setSpeed((float)(leftWheel.getMaxSpeed() / 6.5 ));
     leftWheel.backward();
     rightWheel.setSpeed(rightWheel.getMaxSpeed());
     rightWheel.backward();
@@ -80,7 +82,7 @@ public class EV3Server {
 
   public static void driveRight() {
     leftWheel.startSynchronization();
-    rightWheel.setSpeed((float)(rightWheel.getMaxSpeed() / 5.0));
+    rightWheel.setSpeed((float)(rightWheel.getMaxSpeed() / 6.5));
     rightWheel.backward();
     leftWheel.setSpeed(leftWheel.getMaxSpeed());
     leftWheel.backward();
