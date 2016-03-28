@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import lejos.hardware.Sound;
 import lejos.hardware.motor.*;
 import lejos.hardware.port.MotorPort;
+import java.io.EOFException;
 
 public class EV3Server {
   public static EV3LargeRegulatedMotor rightWheel = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -20,8 +21,15 @@ public class EV3Server {
     DataInputStream inStream = new DataInputStream(s.getInputStream());
     // Motor.A.rotateTo(90);
     while (true) {
-      String action = inStream.readUTF();
-      System.out.println(action);
+      String action = null;
+      // Used to exit gracefully when client exits
+      try {
+        action = inStream.readUTF();
+      } catch(EOFException e) {
+        System.err.println("Lost connection.");
+        System.exit(1);
+      }
+      // System.out.println(action);
       if (action.equals("w")) {
         driveForward();
       } else if (action.equals("s")) {

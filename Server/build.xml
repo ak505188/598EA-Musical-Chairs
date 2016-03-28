@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<project name="EV3Server" default="upload" basedir="/..">
+	<property file="${user.dir}/build.properties" />
+	<property environment="env" />
+
+	<target name="clean" description="delete old files">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="compile" depends="clean" description="compile the source ">
+		<!-- Compile the java code from ${source.dir} to ${classes.dir}  -->
+		<mkdir dir="${classes.dir}" />
+		<echo> ${target} </echo>
+		<javac
+			target="${target}"
+			source="${target}"
+			srcdir="${source.dir}"
+			destdir="${classes.dir}"
+			debug="true"
+			includeAntRuntime="false"
+			includeJavaRuntime="false"
+			verbose="true"
+		>
+			<classpath>
+				<fileset dir="${env.EV3_HOME}/lib/ev3">
+					<include name="*.jar"/>
+				</fileset>
+			</classpath>
+			<!-- enable warnings -->
+			<!-- <compilerarg value="-Xlint:${source.warn}" /> -->
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar destfile="${output.jar}" basedir="${classes.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="${main.class}"/>
+				<attribute name="Class-Path" value="${class.path}"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="upload" depends="jar">
+		<scp todir="${credentials}@${ev3.host}:${programs.dir}" trust="true">
+			<fileset file="${output.jar}"/>
+		</scp>
+	</target>
+
+</project>
