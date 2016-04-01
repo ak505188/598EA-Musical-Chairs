@@ -9,6 +9,7 @@ import java.io.EOFException;
 public class EV3Server {
   public static EV3LargeRegulatedMotor rightWheel = new EV3LargeRegulatedMotor(MotorPort.A);
   public static EV3LargeRegulatedMotor leftWheel = new EV3LargeRegulatedMotor(MotorPort.D);
+  public static EV3LargeRegulatedMotor hammer = new EV3LargeRegulatedMotor(MotorPort.C);
 
 
   public static void main (String[] args) throws Exception {
@@ -40,6 +41,8 @@ public class EV3Server {
         driveRight();
       } else if (action.equals("x")) {
         driveBackward();
+      } else if (action.equals("h")) {
+        hammerTime();
       } else {
         Sound.beep();
       }
@@ -47,10 +50,10 @@ public class EV3Server {
   }
 
   public static void hammerTime() {
-    Motor.A.setSpeed(Motor.A.getMaxSpeed());
+    hammer.setSpeed(hammer.getMaxSpeed());
     for (int i = 0; i < 3; i++) {
-      Motor.A.rotateTo(-80);
-      Motor.A.rotateTo(0);
+      hammer.rotateTo(-80);
+      hammer.rotateTo(0);
     }
   }
 
@@ -81,19 +84,23 @@ public class EV3Server {
 
   public static void driveLeft() {
     leftWheel.startSynchronization();
-    leftWheel.setSpeed((float)(leftWheel.getMaxSpeed() / 6.5 ));
-    leftWheel.backward();
+    // leftWheel.setSpeed((float)(leftWheel.getMaxSpeed() / 6.5 ));
+    leftWheel.setSpeed(leftWheel.getMaxSpeed());
+    leftWheel.forward();
     rightWheel.setSpeed(rightWheel.getMaxSpeed());
     rightWheel.backward();
+    // System.out.println("Left wheel speed: " + leftWheel.getSpeed() + "Right wheel speed: " + rightWheel.getSpeed());
     leftWheel.endSynchronization();
   }
 
   public static void driveRight() {
     leftWheel.startSynchronization();
-    rightWheel.setSpeed((float)(rightWheel.getMaxSpeed() / 6.5));
-    rightWheel.backward();
+    // rightWheel.setSpeed((float)(rightWheel.getMaxSpeed() / 6.5));
+    rightWheel.setSpeed(rightWheel.getMaxSpeed());
+    rightWheel.forward();
     leftWheel.setSpeed(leftWheel.getMaxSpeed());
     leftWheel.backward();
+    // System.out.println("Left wheel speed: " + leftWheel.getSpeed() + "Right wheel speed: " + rightWheel.getSpeed());
     leftWheel.endSynchronization();
   }
 
