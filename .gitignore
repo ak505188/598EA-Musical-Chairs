@@ -2,4 +2,5 @@ Server/build
 *.log
 *.DS_STORE
 *.swp
+*.class
 
