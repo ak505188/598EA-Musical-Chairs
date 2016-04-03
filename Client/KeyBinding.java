@@ -11,7 +11,6 @@ import java.awt.event.*;
 
 public class KeyBinding extends JFrame {
 
-
   private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
   public static Socket connection;
   public static DataOutputStream outStream;
@@ -27,20 +26,53 @@ public class KeyBinding extends JFrame {
     controls.append("w:\tforward\n");
     controls.append("a:\tleft\n");
     controls.append("d:\tright\n");
-    controls.append("s:\tstop\n");
-    controls.append("x:\tback\n");
+    controls.append("s:\tback\n");
+    controls.append("release key:\tstop\n");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("W"), "forward");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released W"), "stop");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("A"), "left");
+    controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released A"), "stop");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("D"), "right");
+    controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released D"), "stop");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("S"), "backward");
+    controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released S"), "stop");
     controls.getActionMap().put("forward", new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent e) {
         try {
           outStream.writeUTF("w");
         } catch (Exception E) {
-          System.err.println("Error with stop: " + e);
+          System.err.println("Error in forward: " + e);
+        }
+      }
+    });
+    controls.getActionMap().put("backward", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          outStream.writeUTF("x");
+        } catch (Exception E) {
+          System.err.println("Error in backward: " + e);
+        }
+      }
+    });
+    controls.getActionMap().put("left", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          outStream.writeUTF("a");
+        } catch (Exception E) {
+          System.err.println("Error in left: " + e);
+        }
+      }
+    });
+    controls.getActionMap().put("right", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          outStream.writeUTF("d");
+        } catch (Exception E) {
+          System.err.println("Error in right: " + e);
         }
       }
     });
@@ -50,7 +82,7 @@ public class KeyBinding extends JFrame {
         try {
           outStream.writeUTF("s");
         } catch (Exception E) {
-          System.err.println("Error with stop: " + e);
+          System.err.println("Error in stop: " + e);
         }
       }
     });
@@ -66,8 +98,8 @@ public class KeyBinding extends JFrame {
       System.out.println("Exiting now");
       System.exit(0);
     }
-    Socket connection = connectToEV3(args[0], Integer.parseInt(args[1]));
-    DataOutputStream outStream = new DataOutputStream(connection.getOutputStream());
+    connection = connectToEV3(args[0], Integer.parseInt(args[1]));
+    outStream = new DataOutputStream(connection.getOutputStream());
     new KeyBinding();
   }
 
