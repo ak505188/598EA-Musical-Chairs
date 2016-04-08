@@ -27,6 +27,7 @@ public class KeyBinding extends JFrame {
     controls.append("a:\tleft\n");
     controls.append("d:\tright\n");
     controls.append("s:\tback\n");
+    controls.append("h:\thammer\n");
     controls.append("release key:\tstop\n");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("W"), "forward");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released W"), "stop");
@@ -36,6 +37,7 @@ public class KeyBinding extends JFrame {
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released D"), "stop");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("S"), "backward");
     controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("released S"), "stop");
+    controls.getInputMap(IFW).put(KeyStroke.getKeyStroke("H"), "hammer");
     controls.getActionMap().put("forward", new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -76,6 +78,16 @@ public class KeyBinding extends JFrame {
         }
       }
     });
+    controls.getActionMap().put("hammer", new AbstractAction() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        try {
+          outStream.writeUTF("h");
+        } catch (Exception E) {
+          System.err.println("Error in backward: " + e);
+        }
+      }
+    });
     controls.getActionMap().put("stop", new AbstractAction() {
       @Override
       public void actionPerformed(ActionEvent e) {
@@ -89,9 +101,7 @@ public class KeyBinding extends JFrame {
     this.add(controls);
     this.setVisible(true);
   }
-
-
-
+ 
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
       System.out.println("Insert IP address & port number as arguments");

@@ -10,10 +10,12 @@ public class EV3Server {
   public static EV3LargeRegulatedMotor rightWheel = new EV3LargeRegulatedMotor(MotorPort.A);
   public static EV3LargeRegulatedMotor leftWheel = new EV3LargeRegulatedMotor(MotorPort.D);
   public static EV3LargeRegulatedMotor hammer = new EV3LargeRegulatedMotor(MotorPort.C);
+  private static int hammerPos = 0;
 
 
   public static void main (String[] args) throws Exception {
     leftWheel.synchronizeWith(new EV3LargeRegulatedMotor[] {rightWheel});
+    hammer.rotate(-195);
     System.out.println("Server ready for connection.");
     ServerSocket serv = new ServerSocket(1111);
     // Waits for client connection
@@ -50,10 +52,13 @@ public class EV3Server {
   }
 
   public static void hammerTime() {
-    hammer.setSpeed(hammer.getMaxSpeed());
-    for (int i = 0; i < 3; i++) {
-      hammer.rotateTo(-80);
-      hammer.rotateTo(0);
+    hammer.setSpeed((hammer.getMaxSpeed() / 2));
+    if (hammerPos == 0) {
+        hammer.rotate(195);
+        hammerPos = 1;
+    } else {
+        hammer.rotate(-195);
+        hammerPos = 0;
     }
   }
 
