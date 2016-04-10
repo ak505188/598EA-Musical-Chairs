@@ -45,6 +45,12 @@ public class EV3Server {
         driveBackward();
       } else if (action.equals("h")) {
         hammerTime();
+      } else if (action.equals("hammerup")) {
+        hammerUp();
+      } else if (action.equals("hammerdown")) {
+        hammerDown();
+      } else if (action.equals("hammerstop")) {
+        hammerStop();
       } else {
         Sound.beep();
       }
@@ -54,13 +60,26 @@ public class EV3Server {
   public static void hammerTime() {
     hammer.setSpeed((hammer.getMaxSpeed() / 2));
     if (hammerPos == 0) {
-        hammer.rotate(195);
+        hammer.rotate(195, true);
         hammerPos = 1;
     } else {
-        hammer.rotate(-195);
+        hammer.rotate(-195, true);
         hammerPos = 0;
     }
   }
+
+  public static void hammerUp() {
+    hammer.backward();
+  }
+
+  public static void hammerDown() {
+    hammer.forward();
+  }
+
+  public static void hammerStop() {
+    hammer.stop();
+  }
+
 
   public static void driveForward() {
     leftWheel.startSynchronization();
