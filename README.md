@@ -4,7 +4,7 @@ Alexandr Kolesnik
 
 Contains code for a remote controlled robot. 
 
-KeyBinding.java is ran as a java program. It sets up keybindings and sends commands to the EV3 brick. It takes two arguments the IP of the EV3 brick and the Port(defaults to 1111) of the server being ran on the EV3 brick.
+KeyBinding.java is ran as a java program. It sets up keybindings and sends commands to the EV3 brick. It takes two arguments the IP and the Port of the server being ran on the EV3 brick.
 
 EV3Server.java is ran as a LEJOS program on the EV3 brick. It receives commands from the client and executes the appropriate functions.
 
