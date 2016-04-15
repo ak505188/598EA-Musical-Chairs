@@ -2,6 +2,13 @@ Tim Hughes
 Frank Addelia
 Alexandr Kolesnik
 
+Contains code for a remote controlled robot. 
+
+KeyBinding.java is ran as a java program. It sets up keybindings and sends commands to the EV3 brick. It takes two arguments the IP of the EV3 brick and the Port(defaults to 1111) of the server being ran on the EV3 brick.
+
+EV3Server.java is ran as a LEJOS program on the EV3 brick. It receives commands from the client and executes the appropriate functions.
+
+
 # Project 2: Musical Chairs (Well.. Circles)
 Build a mobile robot using a color (or other suitable sensors) that competes with other robots on a playing field to find a colored target on the floor and occupies it.
  
