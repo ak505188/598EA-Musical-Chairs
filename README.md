@@ -1,3 +1,7 @@
+Tim Hughes
+Frank Addelia
+Alexandr Kolesnik
+
 # Project 2: Musical Chairs (Well.. Circles)
 Build a mobile robot using a color (or other suitable sensors) that competes with other robots on a playing field to find a colored target on the floor and occupies it.
  
