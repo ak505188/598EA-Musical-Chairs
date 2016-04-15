@@ -2,7 +2,7 @@ Tim Hughes
 Frank Addelia
 Alexandr Kolesnik
 
-Contains code for a remote controlled robot. 
+Remote controlled LEJOS robot. 
 
 KeyBinding.java is ran as a java program. It sets up keybindings and sends commands to the EV3 brick. It takes two arguments the IP and the Port of the server being ran on the EV3 brick.
 
